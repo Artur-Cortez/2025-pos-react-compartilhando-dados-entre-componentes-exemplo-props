@@ -1,22 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 
-const MeuBotao = (props) => {
+interface MeuBotaoProps {
+  contador: number;
+  incremento: number;
+  funcao: (incremento: number) => void;
+  titulo: string;
+}
+
+const MeuBotao: React.FC<MeuBotaoProps> = ({titulo, contador, incremento, funcao}) => {
 	const [contadorDoBotao, setContadorDoBotao] = useState(0);
 
-	const incrementar = (incremento) => {
+	const incrementar = (incremento: number) => {
 		setContadorDoBotao(contadorDoBotao + incremento);
-		props.funcao(incremento);
+		funcao(incremento);
 	};
 
 	return (
 		<div className="bg-gray-100 p-6 rounded-lg shadow-sm border border-gray-200 max-w-xs mx-auto mb-4">
 			<button
 				className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white py-2 px-4 text-base rounded-full"
-				onClick={() => incrementar(props.incremento)}
+				onClick={() => incrementar(incremento)}
 			>
-				{props.titulo}
+				{titulo}
 			</button>
 			<p className="text-sm">
 				O valor do <span className="font-bold">contador deste botão</span> é{" "}
@@ -24,7 +32,7 @@ const MeuBotao = (props) => {
 			</p>
 			<p className="text-sm">
 				O valor do <span className="font-bold">contador compartilhado</span> é{" "}
-				{props.contador}
+				{contador}
 			</p>
 		</div>
 	);
@@ -33,7 +41,7 @@ const MeuBotao = (props) => {
 const Home = () => {
 	const [contadorCompartilhado, setContadorCompartilhado] = useState(0);
 
-	const contar = (incremento) => {
+	const contar = (incremento: number) => {
 		setContadorCompartilhado(contadorCompartilhado + incremento);
 	};
 
